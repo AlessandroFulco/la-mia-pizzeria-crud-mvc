@@ -52,7 +52,12 @@ else
                         @pizza.Price
                     </td>
                     <td class="detail">
-                        <a href="@Url.Action("Detail", new {id = pizza.Id})" class="btn btn-primary rounded">Mostra</a>
+                        <a href="@Url.Action("Detail", "Pizza", new {id = pizza.Id})" class="btn btn-primary rounded">Mostra</a>
+                        <a href="@Url.Action("Update", "Pizza", new {id = pizza.Id})" class="btn btn-warning rounded">Modifica</a>
+
+                        <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
+                            <button class="btn btn-danger rounded">Elimina</button>
+                        </form>
                     </td>
                 </tr>
             }
