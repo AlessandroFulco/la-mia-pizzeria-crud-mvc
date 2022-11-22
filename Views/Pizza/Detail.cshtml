@@ -1,0 +1,20 @@
+﻿@model Pizza
+
+<a class="btn btn-primary" href="@Url.Action("index", "pizza")">Torna alla home</a>
+
+<div class="d-flex justify-content-center">
+    <div class="card mb-3 " style="width: 800px;">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="@Model.Photo" class="img-fluid rounded-start" alt="Pizza">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Name</h5>
+                    <p class="card-text">@Model.Description</p>
+                    <strong class="card-text">@Model.Price</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

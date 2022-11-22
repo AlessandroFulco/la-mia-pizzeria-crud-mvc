@@ -1,0 +1,205 @@
+﻿@using la_mia_pizzeria_static.Controllers
+@{
+
+    Layout = "_SnacksLayout";
+
+}
+
+
+<h1>
+    Snacks
+</h1>
+
+@*v1*@
+<a class="btn btn-primary text-dark" asp-area="" asp-controller="Home" asp-action="Index">Return to Home</a>
+@*v2*@
+<a class="btn btn-primary text-dark" href="@Url.Action("Index", "Home")">Return to Home</a>
+
+@* Snack 1*@
+
+<div class="card my-3">
+    <div class="card-header">
+        Snack 1
+    </div>
+    <div class="card-body">
+        <p>
+            1. Dichiarare una variabile valorizzandola con il nostro nome.
+            Dichiarare un'altra variabile valorizzandola con il nostro cognome.
+            Stampare il nostro nome e cognome all'interno di un tag h2.
+        </p>
+
+        @{
+            string nome = "Alessandro";
+            string cognome = "Fulco";
+        }
+
+        <h2>
+            @nome @cognome
+        </h2>
+
+    </div>
+</div>
+
+@* Snack 2*@
+
+<div class="card my-3">
+    <div class="card-header">
+        Snack 2
+    </div>
+    <div class="card-body">
+        <p>
+            2. Creare una funzione che stampa la somma dei numeri che vanno da 1 a n (con n passato come parametro - n incluso)
+            Stampare dentro uno span il risultato.
+        </p>
+
+        @{
+            int SommaNumeri(int numero)
+            {
+                int result = 0;
+
+                for(int i = 1; i <= numero; i++)
+                {
+                    result += i;
+                }
+
+                return result;
+            }
+        }
+
+        <span>
+            la somma dei numeri è: @SommaNumeri(5)
+        </span>
+
+    </div>
+</div>
+
+@* Snack 3*@
+
+<div class="card my-3">
+    <div class="card-header">
+        Snack 3
+    </div>
+    <div class="card-body">
+
+        <p>
+            Contare quante volte la lettera a è presente nalla frase "nel mezzo del cammin di nostra vita" e stampare questo valore in pagina
+        </p>
+
+        @{
+            int result = 0;
+
+            string frase = "nel mezzo del cammin di nostra vita";
+
+            for(int i = 0; i < frase.Length; i++)
+            {
+                if(frase[i].ToString() == "a")
+                {
+                    result += 1;
+                }
+            }
+        }
+
+        <span>
+            @result
+        </span>
+
+    </div>
+</div>
+
+
+@* Snack 4*@
+
+<div class="card my-3">
+    <div class="card-header">
+        Snack 4
+    </div>
+    <div class="card-body">
+
+        <p>
+            4. Creare una List<int> di 20 numeri interi (generati random da 1 a 90, 1 e 90 inclusi) e mostrare in pagina solo i numeri compresi tra 20 e 70
+        </p>
+
+        @{
+            Random random = new Random();
+
+            List<int> numeriRandom = new List<int>();
+
+            for(int i = 1; i <= 20; i++)
+            {
+                numeriRandom.Add(random.Next(1, 91));
+            }
+        }
+
+        @foreach (int numero in numeriRandom)
+        {
+            @if(numero >= 20 && numero <= 70)
+            {
+                <span>
+                    @numero
+                </span>
+            }
+        }
+    </div>
+</div>
+
+
+@* Snack 5*@
+
+<div class="card my-3">
+    <div class="card-header">
+        Snack 5
+    </div>
+    <div class="card-body">
+
+        <p>
+            Stampare in pagina la data e l'ora attuale (usando la classe DateTime) con il formato anno-mese-giorno ore:minuti:secondi
+        </p>
+
+        <span>
+            @DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")
+        </span>
+    </div>
+</div>
+
+
+@* Snack 6*@
+
+<div class="card my-3">
+    <div class="card-header">
+        Snack 6
+    </div>
+    <div class="card-body">
+
+        <p>
+            Partendo dalla data di oggi (usando la classe DateTime) stampare in pagina
+                a. la data di 7 giorni fa
+                b. che giorno della settimana è oggi (il risultato dovrà essere il nome del giorno (Lunedì, Martedì, ...)
+                c. che giorno della settimana sarà nello stesso giorno e mese di oggi ma tra un anno (il risultato dovrà essere il nome del giorno (Lunedì, Martedì, ...)
+        </p>
+
+        @{
+            DateTime data = DateTime.Now;
+
+            DateTime weekAgo = data.AddDays(-7);
+        }
+
+        <div>
+            Una settimana fa: @weekAgo
+        </div>
+
+        <div>
+            Giorno attuale: @data.DayOfWeek
+        </div>
+
+        <div>
+            tra un anno: @data.AddYears(1).DayOfWeek
+        </div>
+
+    </div>
+</div>
+
+
+@*v1*@
+<a class="btn btn-primary text-dark" asp-area="" asp-controller="Home" asp-action="Index">Return to Home</a>
+@*v2*@
+<a class="btn btn-primary text-dark" href="@Url.Action("Index", "Home")">Return to Home</a>
