@@ -33,14 +33,17 @@ else
                     <td class="title">
                         @category.Name
                     </td>
-                    <td class="detail">
-                        <a href="@Url.Action("Detail", "Category", new {id = category.Id})" class="btn btn-primary rounded">Mostra</a>
-                        <a href="@Url.Action("Update", "Category", new {id = category.Id})" class="btn btn-warning rounded">Modifica</a>
+                    @if(category.Name != "nessuna selezionata")
+                    {
+                        <td class="detail">
+                            <a href="@Url.Action("Detail", "Category", new {id = category.Id})" class="btn btn-primary rounded">Mostra</a>
+                            <a href="@Url.Action("Update", "Category", new {id = category.Id})" class="btn btn-warning rounded">Modifica</a>
 
-                        @*<form asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id" method="post">
-                            <button class="btn btn-danger rounded">Elimina</button>
-                        </form>*@
-                    </td>
+                            <form asp-controller="Category" asp-action="Delete" asp-route-id="@category.Id" method="post">
+                                <button class="btn btn-danger rounded">Elimina</button>
+                            </form>
+                        </td>
+                    }
                 </tr>
             }
         </tbody>

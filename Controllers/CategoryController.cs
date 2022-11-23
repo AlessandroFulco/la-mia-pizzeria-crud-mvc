@@ -1,6 +1,7 @@
 ﻿using la_mia_pizzeria_static.Data;
 using la_mia_pizzeria_static.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace la_mia_pizzeria_static.Controllers
@@ -72,5 +73,28 @@ namespace la_mia_pizzeria_static.Controllers
             return RedirectToAction("Index");   
 
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            Category category = db.Categories.Where(c => c.Id == id).FirstOrDefault();
+            List<Pizza> lista = db.Pizze.ToList();
+
+            Category empty = db.Categories.Where(category => category.Name == "nessuna selezionata").FirstOrDefault();
+
+            foreach(Pizza pizza in lista)
+            {
+                if(pizza.CategoryId == category.Id)
+                {
+                    pizza.CategoryId = empty.Id;
+                    db.Categories.Remove(category);
+                    db.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("Index");
+        }
+
     }
 }
