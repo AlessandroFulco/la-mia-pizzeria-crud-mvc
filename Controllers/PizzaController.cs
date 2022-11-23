@@ -1,6 +1,7 @@
 ﻿using la_mia_pizzeria_static.Data;
 using la_mia_pizzeria_static.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
 namespace la_mia_pizzeria_static.Controllers
@@ -16,7 +17,7 @@ namespace la_mia_pizzeria_static.Controllers
         }
         public IActionResult Index()
         {
-            List<Pizza> lista = db.Pizze.ToList();
+            List<Pizza> lista = db.Pizze.Include(pizza => pizza.Category).ToList();
 
             return View(lista);
         }
@@ -24,7 +25,7 @@ namespace la_mia_pizzeria_static.Controllers
         public IActionResult Detail(int id)
         {
             //selezione della pizza dal db secondo l'id passato
-            Pizza pizza = db.Pizze.Where(p => p.Id == id).FirstOrDefault();
+            Pizza pizza = db.Pizze.Where(p => p.Id == id).Include("Category").FirstOrDefault();
 
             return View(pizza);
         }
