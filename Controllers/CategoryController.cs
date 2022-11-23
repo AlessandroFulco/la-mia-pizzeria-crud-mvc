@@ -1,6 +1,7 @@
 ﻿using la_mia_pizzeria_static.Data;
 using la_mia_pizzeria_static.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace la_mia_pizzeria_static.Controllers
 {
@@ -21,6 +22,26 @@ namespace la_mia_pizzeria_static.Controllers
         {
             Category category = db.Categories.Where(category => category.Id == id).FirstOrDefault();
             return View(category);
+        }
+
+        public IActionResult Create()
+        {
+            Category category = new Category();
+            return View(category);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Category category)
+        {
+            if(!ModelState.IsValid)
+            {
+                return View(category);
+            }
+
+            db.Categories.Add(category);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
