@@ -28,6 +28,9 @@ namespace la_mia_pizzeria_static.Models
         [Range(1 , 99.9 , ErrorMessage = "Il prezzo deve essere minimo 1 euro e massimo 99.99")]
         public double Price { get; set; }
 
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
+
         public Pizza()
         {
 
