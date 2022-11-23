@@ -43,5 +43,34 @@ namespace la_mia_pizzeria_static.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        public IActionResult Update(int id)
+        {
+            Category category = db.Categories.Where(category => category.Id == id).FirstOrDefault();
+
+            if (category == null)
+                return NotFound();
+
+            return View(category);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(int id, Category formData)
+        {
+            if(!ModelState.IsValid)
+                return View(formData);
+
+            Category category = db.Categories.Where(category=>category.Id == id).FirstOrDefault();
+            if(category == null)
+                return NotFound();
+
+            category.Name = formData.Name;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index");   
+
+        }
     }
 }
