@@ -1,5 +1,6 @@
 ﻿using la_mia_pizzeria_static.Data;
 using la_mia_pizzeria_static.Models;
+using la_mia_pizzeria_static.Models.Form;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
@@ -33,20 +34,27 @@ namespace la_mia_pizzeria_static.Controllers
         //ritorna la view del form create
         public IActionResult Create()
         {
-            return View("Create");
+            //istanza
+            PizzaForm formData = new PizzaForm();
+            formData.Pizza = new Pizza();
+            //query per recuperare le categorie
+            formData.Categories = db.Categories.ToList();
+
+            return View(formData);
         }
 
         //si occupa della richiesta post create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Pizza modello)
+        public IActionResult Create(PizzaForm formData)
         {
             if (!ModelState.IsValid)
             {
-                return View();
+                formData.Categories = db.Categories.ToList();
+                return View(formData);
             }
 
-            db.Pizze.Add(modello);
+            db.Pizze.Add(formData.Pizza);
             db.SaveChanges();
 
             return RedirectToAction("Index");
