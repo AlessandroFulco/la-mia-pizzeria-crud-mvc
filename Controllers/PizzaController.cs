@@ -63,20 +63,28 @@ namespace la_mia_pizzeria_static.Controllers
         //update
         public IActionResult Update(int id)
         {
-            Pizza pizza = db.Pizze.Where(p => p.Id == id).FirstOrDefault();
+            Pizza pizza = db.Pizze.Where(pizza => pizza.Id == id).FirstOrDefault();
+
 
             if (pizza == null)
                 return NotFound();
-            
-            return View(pizza);
+
+            PizzaForm formData = new PizzaForm();
+
+            formData.Pizza = pizza;
+            formData.Categories = db.Categories.ToList();
+
+            return View(formData);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(int id, Pizza formData)
+        public IActionResult Update(int id, PizzaForm formData)
         {
+            formData.Pizza.Id = id;
             if (!ModelState.IsValid)
             {
+                formData.Categories = db.Categories.ToList();
                 return View(formData);
             }
 
@@ -85,11 +93,11 @@ namespace la_mia_pizzeria_static.Controllers
             if (pizza == null)
                 return NotFound();
 
-            pizza.Name = formData.Name;
-            pizza.Description = formData.Description;
-            pizza.Photo = formData.Photo;
-            pizza.Price = formData.Price;
-
+            pizza.Name = formData.Pizza.Name;
+            pizza.Description = formData.Pizza.Description;
+            pizza.Photo = formData.Pizza.Photo;
+            pizza.Price = formData.Pizza.Price;
+            pizza.CategoryId = formData.Pizza.CategoryId;
 
             db.SaveChanges();
 
