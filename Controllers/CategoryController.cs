@@ -16,5 +16,11 @@ namespace la_mia_pizzeria_static.Controllers
             List<Category> lista = db.Categories.ToList();
             return View(lista);
         }
+
+        public IActionResult Detail(int id) 
+        {
+            Category category = db.Categories.Where(category => category.Id == id).FirstOrDefault();
+            return View(category);
+        }
     }
 }

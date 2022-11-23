@@ -1,0 +1,15 @@
+﻿@model Category
+
+<a class="btn btn-primary" href="@Url.Action("index", "Category")">Lista delle categorie</a>
+
+<div class="d-flex justify-content-center">
+    <div class="card mb-3 " style="width: 800px;">
+        <div class="row g-0">
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">@Model.Name</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
