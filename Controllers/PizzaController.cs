@@ -89,16 +89,30 @@ namespace la_mia_pizzeria_static.Controllers
         //update
         public IActionResult Update(int id)
         {
-            Pizza pizza = db.Pizze.Where(pizza => pizza.Id == id).FirstOrDefault();
-
+            Pizza pizza = db.Pizze.Where(pizza => pizza.Id == id).Include(p => p.Ingredients).FirstOrDefault();
 
             if (pizza == null)
                 return NotFound();
-
+            
             PizzaForm formData = new PizzaForm();
-
+            
             formData.Pizza = pizza;
             formData.Categories = db.Categories.ToList();
+            formData.Ingredients = new List<SelectListItem>();
+
+            List<Ingredient> ingredients = db.Ingredients.ToList();
+
+            foreach (Ingredient item in ingredients)
+            {
+                formData.Ingredients.Add(new SelectListItem(
+                    item.Name,
+                    item.Id.ToString(),
+                    pizza.Ingredients.Any(i => i.Id == item.Id)
+                    ));
+            }
+
+
+
 
             return View(formData);
         }
@@ -112,10 +126,17 @@ namespace la_mia_pizzeria_static.Controllers
             {
                 formData.Pizza.Id = id;
                 formData.Categories = db.Categories.ToList();
+
+                List<Ingredient> lista = db.Ingredients.ToList();
+                foreach (Ingredient item in lista)
+                {
+                    formData.Ingredients.Add(new SelectListItem(item.Name, item.Id.ToString()));
+                }
+
                 return View(formData);
             }
 
-            Pizza pizza = db.Pizze.Where(p => p.Id == id).FirstOrDefault();
+            Pizza pizza = db.Pizze.Where(p => p.Id == id).Include(p => p.Ingredients).FirstOrDefault();
 
             if (pizza == null)
                 return NotFound();
@@ -125,6 +146,19 @@ namespace la_mia_pizzeria_static.Controllers
             pizza.Photo = formData.Pizza.Photo;
             pizza.Price = formData.Pizza.Price;
             pizza.CategoryId = formData.Pizza.CategoryId;
+
+            pizza.Ingredients.Clear();
+
+            if(formData.SelectedIngredients == null)
+            {
+                formData.SelectedIngredients = new List<int>();
+            }
+
+            foreach(int ingredientsId in formData.SelectedIngredients)
+            {
+                Ingredient ingredient = db.Ingredients.Where(i => i.Id == ingredientsId).FirstOrDefault();
+                pizza.Ingredients.Add(ingredient);
+            }
 
             db.SaveChanges();
 
