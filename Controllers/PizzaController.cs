@@ -2,6 +2,7 @@
 using la_mia_pizzeria_static.Models;
 using la_mia_pizzeria_static.Models.Form;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -37,8 +38,15 @@ namespace la_mia_pizzeria_static.Controllers
             //istanza
             PizzaForm formData = new PizzaForm();
             formData.Pizza = new Pizza();
+            formData.Ingredients = new List<SelectListItem>();
             //query per recuperare le categorie
             formData.Categories = db.Categories.ToList();
+            List<Ingredient> Ingredients = db.Ingredients.ToList();
+
+            foreach(Ingredient item in Ingredients)
+            {
+                formData.Ingredients.Add(new SelectListItem(item.Name, item.Id.ToString()));
+            }
 
             return View(formData);
         }
@@ -51,7 +59,25 @@ namespace la_mia_pizzeria_static.Controllers
             if (!ModelState.IsValid)
             {
                 formData.Categories = db.Categories.ToList();
+                formData.Ingredients = new List<SelectListItem>();
+
+                List<Ingredient> lista = db.Ingredients.ToList();
+
+                foreach(Ingredient item in lista)
+                {
+                    formData.Ingredients.Add(new SelectListItem(item.Name, item.Id.ToString()));
+                }
+
                 return View(formData);
+            }
+
+
+            formData.Pizza.Ingredients = new List<Ingredient>();
+
+            foreach(int ingredientId in formData.SelectedIngredients)
+            {
+                Ingredient ingredient = db.Ingredients.Where(i => i.Id == ingredientId).FirstOrDefault();
+                formData.Pizza.Ingredients.Add(ingredient);
             }
 
             db.Pizze.Add(formData.Pizza);
@@ -81,9 +107,10 @@ namespace la_mia_pizzeria_static.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Update(int id, PizzaForm formData)
         {
-            formData.Pizza.Id = id;
+            
             if (!ModelState.IsValid)
             {
+                formData.Pizza.Id = id;
                 formData.Categories = db.Categories.ToList();
                 return View(formData);
             }

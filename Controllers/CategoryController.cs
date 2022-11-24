@@ -27,8 +27,7 @@ namespace la_mia_pizzeria_static.Controllers
 
         public IActionResult Create()
         {
-            Category category = new Category();
-            return View(category);
+            return View();
         }
 
         [HttpPost]

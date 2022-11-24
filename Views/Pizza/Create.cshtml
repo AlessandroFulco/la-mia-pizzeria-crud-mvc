@@ -52,9 +52,18 @@
                         }
                     </select>
                 </div>
+                <div class="mb-3">
+                    <strong>Ingredients:</strong>
+                    <select asp-for="SelectedIngredients"
+                            asp-items="@Model.Ingredients"
+                            multiple="multiple"
+                            size="5"
+                            class="form-control mb-2 mr-sm-2 ml-sm-3 leftList">
+                    </select>
+                </div>
                 @*btn invio form*@
                 <div class="text-end">
-                    <input type="submit" class="btn btn-small btn-success" value="Salva">
+                    <input type="submit" class="btn btn-small btn-primary" value="Salva">
                 </div>
             </form>
         </div>
