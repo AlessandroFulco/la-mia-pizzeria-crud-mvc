@@ -1,14 +1,14 @@
-﻿@model Category
+﻿@model Ingredient
 
 <div class="container">
     <div class="row">
         <div class="col-12">
 
             <div class="d-flex align-items-center">
-                <h1 class="mt-3 mb-3">Nuova categoria</h1>
+                <h1 class="mt-3 mb-3">Nuovo ingrediente</h1>
             </div>
 
-            <form asp-controller="Category" asp-action="Create" method="post">
+            <form asp-controller="Ingredient" asp-action="Create" method="post">
                 @Html.AntiForgeryToken()
 
                 @*Name*@
@@ -19,7 +19,7 @@
                 </div>
                 @*btn invio form*@
                 <div class="text-end">
-                    <input type="submit" class="btn btn-small btn-success" value="Salva">
+                    <input type="submit" class="btn btn-small btn-primary" value="Salva">
                 </div>
             </form>
         </div>

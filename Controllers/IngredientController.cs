@@ -18,5 +18,30 @@ namespace la_mia_pizzeria_static.Controllers
             List<Ingredient> lista = db.Ingredients.ToList();
             return View(lista);
         }
+
+        public IActionResult Detail(int id)
+        {
+            Ingredient ingredient = db.Ingredients.Where(i => i.Id == id).FirstOrDefault();
+            return View(ingredient);
+        }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(Ingredient formData)
+        {
+            if (!ModelState.IsValid)
+                return View(formData);
+
+            db.Ingredients.Add(formData);
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+            
+        }
     }
 }
