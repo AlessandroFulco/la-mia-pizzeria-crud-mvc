@@ -37,7 +37,7 @@ else
                         <a href="@Url.Action("Detail", "Ingredient", new {id = ingredient.Id})" class="btn btn-primary rounded">Mostra</a>
                         <a href="@Url.Action("Update", "Ingredient", new {id = ingredient.Id})" class="btn btn-warning rounded">Modifica</a>
 
-                        <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@ingredient.Id" method="post">
+                        <form asp-controller="Ingredient" asp-action="Delete" asp-route-id="@ingredient.Id" method="post">
                             <button class="btn btn-danger rounded">Elimina</button>
                         </form>
                     </td>
