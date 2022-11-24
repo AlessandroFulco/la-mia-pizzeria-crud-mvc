@@ -43,5 +43,33 @@ namespace la_mia_pizzeria_static.Controllers
             return RedirectToAction("Index");
             
         }
+
+        public IActionResult Update(int id)
+        {
+            Ingredient ingredient = db.Ingredients.Where(i => i.Id == id).FirstOrDefault();
+            return View(ingredient);
+
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Update(int id, Ingredient formData)
+        {
+            if (!ModelState.IsValid)
+            {
+                formData.Id = id;
+                return View(formData);
+            }
+
+            Ingredient ingredient = db.Ingredients.Where(i => i.Id == id).FirstOrDefault();
+            if (ingredient == null)
+                return NotFound();
+
+            ingredient.Name = formData.Name;
+
+            db.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
     }
 }
