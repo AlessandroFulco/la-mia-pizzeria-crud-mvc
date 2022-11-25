@@ -4,7 +4,7 @@ using Microsoft.SqlServer.Server;
 
 namespace la_mia_pizzeria_static.Models.Repositories
 {
-    public class DbPizzaRepository
+    public class DbPizzaRepository : IDbPizzaRepository
     {
         public PizzeriaDbContext db = PizzeriaDbContext.Instance;
         public DbIngredientsRepository ingredientsRepository;

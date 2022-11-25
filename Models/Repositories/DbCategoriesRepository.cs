@@ -2,7 +2,7 @@
 
 namespace la_mia_pizzeria_static.Models.Repositories
 {
-    public class DbCategoriesRepository
+    public class DbCategoriesRepository : IDbCategoriesRepository
     {
         public PizzeriaDbContext db = PizzeriaDbContext.Instance;
 
@@ -11,7 +11,7 @@ namespace la_mia_pizzeria_static.Models.Repositories
 
         }
 
-        internal List<Category>? All()
+        public List<Category>? All()
         {
             return db.Categories.ToList();
         }
