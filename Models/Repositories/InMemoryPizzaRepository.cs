@@ -1,6 +1,6 @@
 ﻿namespace la_mia_pizzeria_static.Models.Repositories
 {
-    public class InMemoryPizzaController : IDbPizzaRepository
+    public class InMemoryPizzaRepository : IDbPizzaRepository
     {
         public static List<Pizza> Pizze = new List<Pizza>();
 
