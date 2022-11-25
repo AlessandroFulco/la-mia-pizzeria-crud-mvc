@@ -6,6 +6,8 @@
 
         public List<Ingredient> All()
         {
+            Ingredient ingredient = new Ingredient() { Id = 1, Name = "Fake Ingredient" };
+            Ingredients.Add(ingredient);
             return Ingredients.ToList();
         }
 

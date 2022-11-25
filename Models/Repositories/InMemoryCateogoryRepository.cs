@@ -6,7 +6,9 @@
 
         public List<Category>? All()
         {
-            return Categories;
+            Category ingredient = new Category() { Id = 1, Name = "Fake Category" };
+            Categories.Add(ingredient);
+            return Categories.ToList();
         }
     }
 }
