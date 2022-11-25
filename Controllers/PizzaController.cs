@@ -1,6 +1,7 @@
 ﻿using la_mia_pizzeria_static.Data;
 using la_mia_pizzeria_static.Models;
 using la_mia_pizzeria_static.Models.Form;
+using la_mia_pizzeria_static.Models.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,15 +12,20 @@ namespace la_mia_pizzeria_static.Controllers
     public class PizzaController : Controller
     {
         PizzeriaDbContext db;
+        DbPizzaRepository pizzaRepository;
 
         public PizzaController() : base()
         {
             //Collegamento con il db
-            db = new PizzeriaDbContext();
+            //db = new PizzeriaDbContext();
+
+            pizzaRepository = new DbPizzaRepository();
         }
         public IActionResult Index()
         {
-            List<Pizza> lista = db.Pizze.Include(pizza => pizza.Category).ToList();
+
+            //List<Pizza> lista = db.Pizze.Include(pizza => pizza.Category).ToList();
+            List<Pizza> lista = pizzaRepository.All();
 
             return View(lista);
         }
