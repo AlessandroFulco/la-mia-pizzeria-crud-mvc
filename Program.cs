@@ -1,8 +1,11 @@
 using la_mia_pizzeria_static.Models.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped<IDbPizzaRepository, DbPizzaRepository>();
+builder.Services.AddScoped<IDbPizzaRepository, InMemoryPizzaRepository>();
+builder.Services.AddScoped<IDbCategoriesRepository, InMemoryCateogoryRepository>();
+builder.Services.AddScoped<IDbIngredientsRepository, InMemoryIngredientRepository>();
 
 
 
